@@ -5,6 +5,8 @@ const url = require('url');
 const encryptor = require('file-encryptor');
 const key = 'Santhu bro oopu, dham unte aapu !!';
 const fs = require('fs');
+const User = require('../models/register');
+
 var fileTitle ;
 var uploadFilePath = './uploads/' + fileTitle;
 
@@ -24,7 +26,7 @@ let storage = multer.diskStorage({
 const upload = multer({ storage: storage }).single('file');
 
 module.exports = (req, res, next) => {
-  console.log(req.params);
+  let hash = req.params.hash;
   let userId = req.params.userId;
   let folder = req.params.folderName;
   function uploadFile() {
@@ -41,15 +43,34 @@ module.exports = (req, res, next) => {
   }
 
   function encrypyFile() {
-    console.log(userId, folder, fileTitle);
-    encryptor.encryptFile(uploadFilePath, './UsersData/'+userId+'/'+folder+'/'+fileTitle, userId, function(err) {
+    console.log("hash is "+hash);
+    encryptor.encryptFile(uploadFilePath, './UsersData/'+userId+'/'+folder+'/'+fileTitle, hash, function(err) {
       // Encryption complete.
       if (err) {
-        console.log("err");
-        res.json({success : false})
-      }
-      fs.unlinkSync(uploadFilePath);
-      res.json({success : true})
+         console.log("err");
+         res.json({success : false})
+        }
+        User.findOne({
+          userId: userId
+        }, function(err, user) {
+          console.log(user.data);
+          let data = JSON.parse(user.data)
+          data[folder].push(fileTitle);
+          user.data = JSON.stringify(data);
+
+          let keysArr = JSON.parse(user.fileKeys);
+          keysArr[fileTitle] = hash
+          user.fileKeys = JSON.stringify(keysArr);
+
+          user.save(function (err) {
+            if (err) {
+              res.json({success : false})
+            }
+            fs.unlinkSync(uploadFilePath);
+            res.json({success : true})
+          });
+        });
+
     });
   }
 

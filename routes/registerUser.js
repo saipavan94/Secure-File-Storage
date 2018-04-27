@@ -13,7 +13,9 @@ module.exports = (req, res, next) => {
     password: req.body.password,
     email: req.body.email,
     phone : req.body.phone,
-    userId : id
+    userId : id,
+    data : "{}",
+    fileKeys : "{}"
   });
 
   newUser.save(function(err) {

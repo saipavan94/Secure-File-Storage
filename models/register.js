@@ -6,7 +6,9 @@ const registerUser = new Schema({
   password: String,
   email: String,
   phone: String,
-  userId: String
+  userId: String,
+  data : String,
+  fileKeys : String
 });
 
-module.exports = mongoose.model('registerUser', registerUser);
+module.exports = mongoose.model('registeredUser', registerUser);

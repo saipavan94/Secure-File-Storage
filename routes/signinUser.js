@@ -7,6 +7,7 @@ const config = require('../config');
 module.exports = (req, res, next) => {
     const userEmail = req.body.email;
     const userPassword = req.body.password;
+
     User.findOne({
       email: userEmail
     }, function(err, user) {
