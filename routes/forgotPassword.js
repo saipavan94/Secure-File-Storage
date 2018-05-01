@@ -28,7 +28,7 @@ module.exports = (req, res, next) => {
     console.log(filKeys[file]);
     let mailOptions = {
       from: 'ganapathy567@gmail.com',
-      to: 'pavansai.n@gmail.com',
+      to: user.email,
       subject: 'Your Key for '+ file,
       text: 'Decryption key is '+ filKeys[file]
     };
