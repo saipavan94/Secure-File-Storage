@@ -4,7 +4,6 @@ const fs = require('fs')
 const dir = './UsersData';
 const download = './Downloads'
 const encryptor = require('file-encryptor');
-const key = 'Santhu bro oopu, dham unte aapu !!';
 const paths = require('path');
 const mime = require('mime-types');
 

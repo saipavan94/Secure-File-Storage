@@ -3,7 +3,6 @@ const router = express.Router();
 const multer = require('multer');
 const url = require('url');
 const encryptor = require('file-encryptor');
-const key = 'Santhu bro oopu, dham unte aapu !!';
 const fs = require('fs');
 const User = require('../models/register');
 

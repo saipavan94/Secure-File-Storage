@@ -14,6 +14,7 @@ const downloadFile = require('./routes/downloadFile');
 const deleteFile = require('./routes/deleteFile')
 const forgotPassword = require('./routes/forgotPassword')
 const checkHash = require('./routes/checkHash')
+const deleteFolder = require('./routes/deleteFolder')
 
 mongoose.connect(config.database)
   .then(() => console.log('connected to mongoose'))
@@ -45,6 +46,7 @@ app.post('/uploadFile/:userId/:folderName/:hash', uploadFile);
 app.get('/loadFiles/:userId/:folderName', loadFiles);
 app.get('/forgotPassword/:userId/:fileName', forgotPassword);
 app.get('/checkHash/:userId/:folderName/:fileName/:hash', checkHash);
+app.get('/deleteFolder/:userId/:folderName', deleteFolder);
 
 app.get('/downloadFile/:userId/:folderName/:fileName/:hash', downloadFile);
 app.get('/deleteFile/:userId/:folderName/:fileName', deleteFile);
